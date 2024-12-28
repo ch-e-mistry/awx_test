@@ -7,6 +7,22 @@
     - custom_message: "<h1>This is a Custom Message for {{ ansible_hostname }}!</h1>"
   
   tasks:
+
+    - name: Replace entire CentOS-Base.repo with vault repo for CentOS 7
+      copy:
+        src: centos7-vault.repo
+        dest: /etc/yum.repos.d/CentOS-Base.repo
+        backup: yes
+      when:
+        - ansible_distribution == "CentOS"
+        - ansible_distribution_major_version|int == 7
+
+    - name: Update package metadata (yum makecache)
+      command: yum makecache fast
+      when:
+        - ansible_distribution == "CentOS"
+        - ansible_distribution_major_version|int == 7
+
     - name: Telepítse az Nginx csomagot
       package:
         name: nginx

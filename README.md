@@ -1,2 +1,2 @@
 # awx_test
-Playbook to test AWX
+Playbook to test AWX - Training pupose
